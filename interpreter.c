@@ -43,7 +43,7 @@ if (!dir)
 chdir_ret = /*TODO:what is it suppose to be? */
 chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
 else
-chdir _ret = chdir(dir);
+chdir_ret = chdir(dir);
 }
 else if (_strcmp(info->[1], "-") == 0)
 {
@@ -54,8 +54,8 @@ _putchar('\n');
 return (1);
 }
 _puts(_getenv(info, "OLDPWD=")), _putchar('\n');
-chdir _ret = /* TODO: what is it suppose to be? */
-chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/")
+chdir_ret = /* TODO: what is it suppose to be? */
+chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 }
 else
 {

@@ -116,7 +116,7 @@ void *_realloc(void *, unsigned int, unsigned int);
 /* toem_memory.c */
 int bfree(void **);
 
-/* toem_atoi.c */
+/* toem_bcode.c */
 int interactive(info_t *);
 int is_delim(char, char *);
 int _isalpha(int);
@@ -129,12 +129,12 @@ int print_d(int, int);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
 
-/* toem_builtin.c */
+/* toem_interpreter.c */
 int _myexit(info_t *);
 int _mycd(info_t *);
 int _myhelp(info_t *);
 
-/* toem_builtin1.c */
+/* toem_arguments.c */
 int _myhistory(info_t *);
 int _myalias(info_t *);
 
