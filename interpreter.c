@@ -80,6 +80,7 @@ return (0);
 int _myhelp(info_t *info)
 {
 char **arg_array;
+
 arg_array = info->argv;
 _puts("function not implemented\n");
 if (0)

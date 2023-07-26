@@ -1,6 +1,10 @@
 #include "shell.h"
 
 /**
+<<<<<<< HEAD
+=======
+ *Ready to start
+>>>>>>> ac86aef80cbcb9c9dc01bb4e0e0b4efe2b1fadde
  
  * Return: 0 on success, 1 on error
  */
