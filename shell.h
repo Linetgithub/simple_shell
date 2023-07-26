@@ -27,6 +27,10 @@
 #define HIST_MAX	4096
 
 extern char **environ;
+/**
+ * struct passinfo - pass info into a function
+ * @err_num: error code for exit.
+ */
 
 typedef struct liststr
 {
