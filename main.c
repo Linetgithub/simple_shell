@@ -1,11 +1,11 @@
+main.c
 #include "shell.h"
 
 /**
-<<<<<<< HEAD
-=======
- *Ready to start
->>>>>>> ac86aef80cbcb9c9dc01bb4e0e0b4efe2b1fadde
- 
+ * main - entry point
+ * @ac: arg count
+ * @av: arg vector
+ *
  * Return: 0 on success, 1 on error
  */
 int main(int ac, char **av)
@@ -14,9 +14,9 @@ int main(int ac, char **av)
 	int fd = 2;
 
 	asm ("mov %1, %0\n\t"
-			"add $3, %0"
-			: "=r" (fd)
-			: "r" (fd));
+		"add $3, %0"
+		: "=r" (fd)
+		: "r" (fd));
 
 	if (ac == 2)
 	{
@@ -42,4 +42,3 @@ int main(int ac, char **av)
 	read_history(info);
 	hsh(info, av);
 	return (EXIT_SUCCESS);
-}
