@@ -58,7 +58,6 @@ chdir_ret = /* TODO: what is it suppose to be? */
 chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 }
 else
-{
 chdir_ret = chdir(info->argv[1]);
 if (chdir_ret == -1)
 {
@@ -72,18 +71,21 @@ _setenv(info, "PWD", getcwd(buffer, 1024));
 }
 return (0);
 }
+
 /**
-* _myhelp - changes the the current directory
-* @info: maintains a constant function prototype
-* Return: 0
-*/
+ *  _myhelp -the current directory of the process is changed
+ *  @info: potential arguments are contained in this structure
+ *  it is used to maintain a constant function prototype.
+ *  Return: it will always return
+ */
 int _myhelp(info_t *info)
 {
 char **arg_array;
+_setenv(info, "OLDPWD", _getenv(info, "PWD="));
 
 arg_array = info->argv;
-_puts("function not implemented\n");
+_puts("help call works. Function not yet implemented \n");
 if (0)
-_puts(*arg_array); /*temp att_unused work */
+_puts(*arg_array); /* temp att_unused workaround */
 return (0);
 }
