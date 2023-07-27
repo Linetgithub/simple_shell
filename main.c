@@ -1,9 +1,17 @@
+main.c
 #include "shell.h"
 
 /**
+<<<<<<< HEAD
  * main - shows the entry point
  * @argv: is the vector to arg
  * @argc: is the count to argc
+=======
+ * main - entry point
+ * @ac: arg count
+ * @av: arg vector
+ *
+>>>>>>> 99d2e97313e194004aa6a841004b914e3e9588fb
  * Return: 0 on success, 1 on error
  */
 int main(int argc, char **argv)
@@ -12,9 +20,9 @@ int main(int argc, char **argv)
 	int fd = 2;
 
 	asm ("mov %1, %0\n\t"
-			"add $3, %0"
-			: "=r" (fd)
-			: "r" (fd));
+		"add $3, %0"
+		: "=r" (fd)
+		: "r" (fd));
 
 	if (argc == 2)
 	{
@@ -40,4 +48,3 @@ int main(int argc, char **argv)
 	read_history(info);
 	hsh(info, argv);
 	return (EXIT_SUCCESS);
-}
