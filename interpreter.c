@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
 * _myexit - used to exit the shell
 * @info:contains arguments
@@ -24,6 +25,7 @@ return (-2);
 info->err_num = -1;
 return (-2);
 }
+
 /**
 * _mycd - current directory has changed
 * @info: maintains a constant function prototype
