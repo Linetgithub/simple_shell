@@ -83,7 +83,6 @@ return (0);
  * @info: potential arguments are contained in this structure
  * it is used to maintain a constant function prototype.
  * Return: it will always return 0
-
  */
 int populate_env_list(info_t *info)
 {
