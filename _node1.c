@@ -1,120 +1,115 @@
 #include "shell.h"
 
 /**
-* list_len - shows the length
-* @h: pointer to first node
-*
-* Return: size of list
-*/
-
-size_t list_len(const list_t *h)
+ * _myhistory - displays the history list, one command by line, preceded
+ *              with line numbers, starting at 0.
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *  Return: Always 0
+ */
+int _myhistory(info_t *info)
 {
-size_t i = 0;
-
-while (h)
-{
-h = h->next;
-i++;
-}
-return (i);
+	print_list(info->history);
+	return (0);
 }
 
 /**
-* list_to_strings - returns an array of strings of the list->str
-* @head: pointer to first node
-*
-* Return: array of strings
-*/
-char **list_to_strings(list_t *head)
+ * unset_alias - sets alias to string
+ * @info: parameter struct
+ * @str: the string alias
+ *
+ * Return: Always 0 on success, 1 on error
+ */
+int unset_alias(info_t *info, char *str)
 {
-list_t *node = head;
-size_t i = list_len(head), j;
-char **strs;
-char *str;
+	char *p, c;
+	int ret;
 
-if (!head || !i)
-return (NULL);
-strs = malloc(sizeof(char *) * (i + 1));
-if (!strs)
-return (NULL);
-for (i = 0; node; node = node->next, i++)
-{
-str = malloc(_strlen(node->str) + 1);
-if (!str)
-{
-for (j = 0; j < i; j++)
-free(strs[j]);
-free(strs);
-return (NULL);
-}
-
-str = _strcpy(str, node->str);
-strs[i] = str;
-}
-strs[i] = NULL;
-return (strs);
+	p = _strchr(str, '=');
+	if (!p)
+		return (1);
+	c = *p;
+	*p = 0;
+	ret = delete_node_at_index(&(info->alias),
+		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+	*p = c;
+	return (ret);
 }
 
 /**
-* print_list - prints all elements of a list_t linked list
-* @h: pointer to first node
-*
-* Return: size of list
-*/
-size_t print_list(const list_t *h)
+ * set_alias - sets alias to string
+ * @info: parameter struct
+ * @str: the string alias
+ *
+ * Return: Always 0 on success, 1 on error
+ */
+int set_alias(info_t *info, char *str)
 {
-size_t i = 0;
+	char *p;
 
-while (h)
-{
-_puts(convert_number(h->num, 10, 0));
-_putchar(':');
-_putchar(' ');
-_puts(h->str ? h->str : "(nil)");
-_puts("\n");
-h = h->next;
-i++;
+	p = _strchr(str, '=');
+	if (!p)
+		return (1);
+	if (!*++p)
+		return (unset_alias(info, str));
+
+	unset_alias(info, str);
+	return (add_node_end(&(info->alias), str, 0) == NULL);
 }
-return (i);
-}
+
 /**
-* node_starts_with - returns node whose string starts with prefix
-* @node: pointer to list head
-* @prefix: string to match
-* @c: the next character after prefix to match
-*
-* Return: match node or null
-*/
-list_t *node_starts_with(list_t *node, char *prefix, char c)
+ * print_alias - prints an alias string
+ * @node: the alias node
+ *
+ * Return: Always 0 on success, 1 on error
+ */
+int print_alias(list_t *node)
 {
-char *p = NULL;
+	char *p = NULL, *a = NULL;
 
-while (node)
-{
-p = starts_with(node->str, prefix);
-if (p && ((c == -1) || (*p == c)))
-return (node);
-node = node->next;
+	if (node)
+	{
+		p = _strchr(node->str, '=');
+		for (a = node->str; a <= p; a++)
+			_putchar(*a);
+		_putchar('\'');
+		_puts(p + 1);
+		_puts("'\n");
+		return (0);
+	}
+	return (1);
 }
-return (NULL);
-}
+
 /**
-* get_node_index - gets the index of a node
-* @head: pointer to list head
-* @node: pointer to the node
-*
-* Return: index of node or -1
-*/
-ssize_t get_node_index(list_t *head, list_t *node)
+ * _myalias - mimics the alias builtin (man alias)
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ *  Return: Always 0
+ */
+int _myalias(info_t *info)
 {
-size_t i = 0;
+	int i = 0;
+	char *p = NULL;
+	list_t *node = NULL;
 
-while (head)
-{
-if (head == node)
-return (i);
-head = head->next;
-i++;
-}
-return (-1);
+	if (info->argc == 1)
+	{
+		node = info->alias;
+		while (node)
+		{
+			print_alias(node);
+			node = node->next;
+		}
+		return (0);
+	}
+	for (i = 1; info->argv[i]; i++)
+	{
+		p = _strchr(info->argv[i], '=');
+		if (p)
+			set_alias(info, info->argv[i]);
+		else
+			print_alias(node_starts_with(info->alias, info->argv[i], '='));
+	}
+
+	return (0);
 }
